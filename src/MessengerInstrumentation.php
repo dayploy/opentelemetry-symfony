@@ -144,9 +144,6 @@ final class MessengerInstrumentation
                     ->setAttribute(TraceAttributes::CODE_NAMESPACE, $class)
                     ->setAttribute(TraceAttributes::CODE_FILEPATH, $filename)
                     ->setAttribute(TraceAttributes::CODE_LINENO, $lineno)
-
-                    ->setAttribute(self::ATTRIBUTE_MESSENGER_TRANSPORT, $class)
-                    ->setAttribute(self::ATTRIBUTE_MESSENGER_MESSAGE, $messageClass)
                 ;
 
                 $parent = Context::getCurrent();
