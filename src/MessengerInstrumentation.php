@@ -22,10 +22,6 @@ use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
 
 final class MessengerInstrumentation
 {
-    const ATTRIBUTE_MESSENGER_BUS = 'symfony.messenger.bus';
-    const ATTRIBUTE_MESSENGER_MESSAGE = 'symfony.messenger.message';
-    const ATTRIBUTE_MESSENGER_TRANSPORT = 'symfony.messenger.transport';
-
     const NO_TRACES_CLIENTS = [
         AmazonSqsTransport::class,
         TraceableMessageBus::class,
