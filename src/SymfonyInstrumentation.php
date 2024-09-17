@@ -20,8 +20,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 final class SymfonyInstrumentation
 {
-    public const NAME = 'symfony';
-
     public static function register(): void
     {
         $instrumentation = new CachedInstrumentation('dayploy.opentelemetry_symfony.http_kernel');
@@ -69,6 +67,11 @@ final class SymfonyInstrumentation
 
                 return [$request];
             },
+        );
+
+        hook(
+            HttpKernel::class,
+            'terminate',
             post: static function (
                 HttpKernel $kernel,
                 array $params,
