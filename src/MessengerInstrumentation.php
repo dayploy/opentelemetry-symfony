@@ -61,7 +61,7 @@ final class MessengerInstrumentation
                     $messageClass = $internalMessage::class;
 
                     if (count($message->all(ReceivedStamp::class)) > 0) {
-                        // en reception
+                        // consuming message
                         $prefix = 'Consume';
                     }
                 }
@@ -102,6 +102,16 @@ final class MessengerInstrumentation
 
                 $scope->detach();
                 $span = Span::fromContext($scope->context());
+
+                /** @var object|Envelope $message */
+                $message = $params[0];
+                if ($message instanceof Envelope) {
+                    if (count($message->all(ReceivedStamp::class)) > 0) {
+                        // consuming message
+                        $span->setAttribute(LoggerSender::ATTRIBUTE, LoggerSender::get());
+                        LoggerSender::reset();
+                    }
+                }
 
                 if (null !== $exception) {
                     $span->recordException($exception, [
