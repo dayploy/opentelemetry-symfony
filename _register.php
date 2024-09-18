@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Dayploy\OpenTelemetrySymfony\DoctrineInstrumentation;
 use Dayploy\OpenTelemetrySymfony\HttpClientInstrumentation;
+use Dayploy\OpenTelemetrySymfony\LoggerSender;
 use Dayploy\OpenTelemetrySymfony\MessengerInstrumentation;
 use Dayploy\OpenTelemetrySymfony\SymfonyInstrumentation;
 use OpenTelemetry\SDK\Sdk;
@@ -22,3 +23,4 @@ SymfonyInstrumentation::register();
 MessengerInstrumentation::register();
 HttpClientInstrumentation::register();
 DoctrineInstrumentation::register();
+LoggerSender::register();

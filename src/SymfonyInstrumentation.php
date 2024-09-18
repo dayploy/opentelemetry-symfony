@@ -85,6 +85,9 @@ final class SymfonyInstrumentation
                 $scope->detach();
                 $span = Span::fromContext($scope->context());
 
+                $span->setAttribute(LoggerSender::ATTRIBUTE, LoggerSender::get());
+                LoggerSender::reset();
+
                 $request = ($params[0] instanceof Request) ? $params[0] : null;
                 if (null !== $request) {
                     $routeName = $request->attributes->get('_route', '');
@@ -155,7 +158,8 @@ final class SymfonyInstrumentation
                     ->recordException($throwable, [
                         TraceAttributes::EXCEPTION_ESCAPED => true,
                     ])
-                    ->setStatus(StatusCode::STATUS_ERROR, $throwable->getMessage());
+                    ->setStatus(StatusCode::STATUS_ERROR, $throwable->getMessage())
+                    ->setAttribute(LoggerSender::ATTRIBUTE, true);
 
                 return $params;
             },
