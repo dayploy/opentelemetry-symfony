@@ -10,7 +10,7 @@ use Psr\Log\LoggerInterface;
 final class LoggerSender
 {
     const ATTRIBUTE = 'app.haslog';
-    public static bool $sendTraces = false;
+    private static array $hasWarningById = [];
 
     public static function register(): void
     {
@@ -34,7 +34,8 @@ final class LoggerSender
                     ?string $filename,
                     ?int $lineno,
                 ): array {
-                    static::$sendTraces = true;
+                    $pid = getmypid();
+                    static::$hasWarningById[$pid] = true;
 
                     return [];
                 },
@@ -44,11 +45,17 @@ final class LoggerSender
 
     public static function get(): bool
     {
-        return static::$sendTraces;
+        $pid = getmypid();
+        if (!key_exists($pid, static::$hasWarningById)) {
+            return false;
+        }
+
+        return static::$hasWarningById[$pid];
     }
 
     public static function reset(): void
     {
-        static::$sendTraces = false;
+        $pid = getmypid();
+        static::$hasWarningById[$pid] = false;
     }
 }
