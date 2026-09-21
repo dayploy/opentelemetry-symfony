@@ -28,6 +28,7 @@ final class HttpClientInstrumentation
     const SYNCHRONOUS_CLIENTS = [
         /** @psalm-suppress UndefinedClass */
         'ApiPlatform\Symfony\Bundle\Test\Client',
+        'ApiPlatform\Test\Client',
     ];
 
     const NO_TRACES_CLIENTS = [
